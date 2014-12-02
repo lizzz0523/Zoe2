@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Test</title>
+	<link type="text/css" rel="stylesheet" href="../src/zoe.css" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		table {
+			border-collapse: collapse;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.my-tabs {
+			line-height: 20px;
+			font-size: 14px;
+		}
+
+		.my-tabs .zoe-tabs_item {
+			display: inline-block;
+			padding: 0 20px;
+			color: #333;
+			background-color: #eee;
+			text-align: center;
+		}
+
+		.my-tabs .zoe-tabs_item:hover {
+			background-color: #ccc;
+
+			-webkit-transition: color 0.3s ease, background-color 0.3s ease;
+		}
+
+		.my-tabs .zoe-tabs_item__active {
+			color: white;
+			background-color: #c00!important;
+
+			-webkit-transition: color 0.3s ease, background-color 0.3s ease;
+		}
+
+		.my-page {
+			line-height: 20px;
+			font: 12px;
+		}
+
+		.my-page .zoe-page_nav,
+		.my-page .zoe-page_inner {
+			display: inline-block;
+		}
+
+		.my-page .zoe-page_item {
+			display: inline-block;
+			padding: 0 5px;
+			color: #333;
+			background-color: #eee;
+			text-align: center;
+		}
+
+		.my-page .zoe-page_item:hover {
+			background-color: #ccc;
+
+			-webkit-transition: color 0.3s ease, background-color 0.3s ease;
+		}
+
+		.my-page .zoe-page_item__active {
+			color: white;
+			background-color: #c00!important;
+
+			-webkit-transition: color 0.3s ease, background-color 0.3s ease;
+		}
+
+		.my-page .zoe-page_item__disabled {
+			color: #999;
+		}
+	</style>
+</head>
+<body>
+<div class="my-tabs" data-zoe="tabs[current=tab1]" data-id="my-tabs">
+	<a href="#tab1">Tab 1</a>
+	<a href="#tab2">Tab 2</a>
+	<a href="#tab3">Tab 3</a>
+	<a href="#tab4">Tab 4</a>
+	<a href="#tab5">Tab 5</a>
+</div>
+<div class="my-page" data-zoe="page[current=5, total=7, range=5]" data-id="my-page">
+</div>
+<script type="text/javascript" data-main="../src/main" src="../src/lib/require.js"></script>
+</body>
+</html>
