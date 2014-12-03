@@ -18,21 +18,17 @@
     console.log('zoe View');
 
 
-    var _slice = Array.prototype.slice,
+    var slice = Array.prototype.slice;
 
-        _super = {
-            setElement : B.View.prototype.setElement,
-            trigger    : B.View.prototype.trigger
-        },
 
-        _rmessage = /^(\S+)\s*(.*)$/,
+    var rmessage = /^(\S+)\s*(.*)$/,
+        rname,
 
-        _extractMessage = function(messages, message, view) {
+        extractMessage = function(messages, message, view) {
             var res = [],
                 key,
                 match,
                 name,
-                rname,
                 subview;
 
             for (key in messages) {
@@ -46,7 +42,7 @@
                     continue;
                 }
 
-                if (subview && _getChildView(subview) !== message.source) {
+                if (subview && getChildView(subview) !== message.source) {
                     continue;
                 }
 
@@ -60,11 +56,11 @@
             return res.length ? res[0].value : null;
         },
 
-        _getChildView = function(view) {
-            
+        getChildView = function(view) {
+
         },
 
-        _getParentView = function(view) {
+        getParentView = function(view) {
             var parent = null,
 
                 $elem = view.$el,
@@ -84,6 +80,7 @@
 
             return parent;
         };
+
 
     var View = B.View.extend({
             inited : false,
@@ -134,7 +131,7 @@
                     res;
 
                 // 触发B.View上的serElement方法
-                res = _super.setElement.call(self, el);
+                res = B.View.setElement.call(self, el);
 
                 self.$el.data('view', self);
 
@@ -144,7 +141,7 @@
             // 重载trigger方法
             trigger : function(name) {
                 var self = this,
-                    args = _slice.call(arguments, 1),
+                    args = slice.call(arguments, 1),
                     names,
                     parent,
                     message,
@@ -152,7 +149,7 @@
                     res;
 
                 // 触发B.View上的trigger方法
-                res = _super.trigger.apply(self, arguments);
+                res = B.View.trigger.apply(self, arguments);
 
                 if (name.indexOf(' ') > -1) {
                     names = name.split(/\s+/);
@@ -161,7 +158,7 @@
                 }
 
                 _.each(names, function(name) {
-                    parent = _getParentView(self);
+                    parent = getParentView(self);
 
                     message = {
                         name   : name,
@@ -170,7 +167,7 @@
 
                     while (parent) {
                         if ('messages' in parent && _.isObject(parent.messages)) {
-                            callback = _extractMessage(parent.messages, message, parent);
+                            callback = extractMessage(parent.messages, message, parent);
 
                             if (callback === null) {
                                 continue;
@@ -186,13 +183,13 @@
                             }
 
                             // 检测callback的返回值，如果返回值为false，则停止冒泡
-                            if (callback.apply(parent, args) === false) {
+                            if (callback.apply(parent, [message].concat(args)) === false) {
                                 break;
                             }
                         }
 
                         message.source = parent;
-                        parent = _getParentView(parent);
+                        parent = getParentView(parent);
                     }
                 });
 
@@ -221,7 +218,7 @@
                 return self;
             }
         }, {
-            EVENT_SYNC : 'sync:view'
+            EVENT_SYNC : 'sync'
         });
 
 

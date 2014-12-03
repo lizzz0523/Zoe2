@@ -9,15 +9,47 @@ define([
 
     var defaults = {
             current : ''
+        },
+
+        super = {
+            initialize : Trigger.prototype.initialize,
+            setElement : Trigger.prototype.setElement
         };
 
 
-    var Tabs = Trigger.extend({
+    var Tab = Trigger.extend({
+            tagName : 'li',
+
+            className : 'zoe-tabs_item',
+
             initialize : function(options) {
                 var self = this,
                     res;
 
-                res = Trigger.prototype.initialize.call(self, options);
+                res = super.initialize.call(self, options);
+
+                self._active = false;
+            },
+
+            select : function(toggle) {
+                var self = this;
+
+                self.$el.toggleClass(Tab.CLASS_ACITVE, toggle);
+
+                self._active = !!toggle;
+            
+                return self;
+            },
+        }, {
+            CLASS_ACITVE : 'zoe-tabs_item__active'
+        }),
+
+        List = Trigger.extend({
+            initialize : function(options) {
+                var self = this,
+                    res;
+
+                res = super.initialize.call(self, options);
 
                 options = _.defaults(options, defaults);
 
@@ -28,47 +60,26 @@ define([
 
             setElement : function(el) {
                 var self = this,
+                    tab = null,
+                    tabKit = [],
                     res;
 
-                res = Trigger.prototype.setElement.call(self, el);
+                res = super.setElement.call(self, el);
 
-                self.$el.addClass(Tabs.CLASS_ELEM);
+                self.$tabs = self.$el.children();
 
-                self._tabKit = {};
-                self.$(Tabs.SELECTOR_ITEM).each(function() {
-                    var elem = this,
-                        hash = elem.href,
+                self.$el.prepend(List.TMPL);
+                self.$el.addClass(List.CLASS);
 
-                        $elem = $(elem);
+                self.$list = self.$('ul');
+                self.$tabs.each(function() {
+                    tab = new Tab();
+                    tabKit.push(tab);
 
-                    if (hash.indexOf('#') === -1) {
-                        return;
-                    }
-                    hash = hash.split('#').pop();
-
-                    self._tabKit[hash] = {
-                        hash : hash,
-                        elem : elem,
-
-                        active : function() {
-                            $elem.addClass(Tabs.CLASS_ACTIVE);
-                        },
-
-                        inactive : function() {
-                            $elem.removeClass(Tabs.CLASS_ACTIVE);
-                        },
-
-                        show : function() {
-                            $elem.removeClass(Tabs.CLASS_HIDE);
-                        },
-
-                        hide : function() {
-                            $elem.addClass(Tabs.CLASS_HIDE);
-                        }
-                    };
-
-                    $elem.addClass(Tabs.CLASS_ITEM);
+                    self.$list.append(tab.$el.append(this));
                 });
+
+                self._tabKit = tabKit;
 
                 return res;
             },
@@ -90,56 +101,41 @@ define([
                 return self;
             },
 
-            _validTab : function(hash) {
+            select : function(hash) {
                 var self = this,
                     tabKit = self._tabKit,
-                    tab;
+                    target = message.source;
 
-                if (hash in tabKit) {
-                    tab = hash;
-                } else {
-                    tab = _.keys(tabKit).shift();
-                }
-
-                return tab;
+                _.each(tabKit, function(tab) {
+                    if (target === tab) {
+                        tab.select(true);
+                    } else{
+                        tab.select(false);
+                    }
+                });
             },
 
-            _updateTab : function(tab) {
+            update : function(target, hash) {
                 var self = this,
-                    tabKit = self._tabKit;
-
-                // 重置所有的tab为非active状态
-                _.invoke(tabKit, 'inactive');
-                // 设置当前tab为active状态
-                tabKit[tab].active();
-
-                self._current = tab;
-            },
-
-            select : function(hash, silent) {
-                var self = this,
-                    current = self._current,
-                    tab = self._validTab(hash),
+                    tabKit = self._tabKit,
                     res;
 
-                res = Trigger.prototype.select.call(self, tab, silent);
+                res = Trigger.prototype.update.call(self, target, hash);
 
-                if (tab !== current) {
-                    self._updateTab(tab);
-                }
-
-                return res;
+                _.each(tabKit, function(tab) {
+                    if (target === tab) {
+                        tab.select(true);
+                    } else{
+                        tab.select(false);
+                    }
+                });
             }
         }, {
-            CLASS_ELEM   : 'zoe-tabs',
-            CLASS_ITEM   : 'zoe-tabs_item',
-            CLASS_HIDE   : 'zoe-tabs_item__hide',
-            CLASS_ACTIVE : 'zoe-tabs_item__active',
-
-            SELECTOR_ITEM : 'a'
+            TMPL  : '<ul class="zoe-tabs_list"></ul>'
+            CLASS : 'zoe-tabs'
         });
 
     
-    return Tabs;
+    return List;
 
 });

@@ -15,36 +15,35 @@ define([
 
     var Trigger = View.extend({
             events : {
-                'click a' : '__onclick'
+                'click a' : '_onclick'
             },
 
-            select : function(hash, silent) {
+            messages : {
+                'select' : '_onselect'
+            }
+
+            select : function(hash) {
                 var self = this;
-                
-                // silent是一个内部参参数，用于屏蔽事件触发
-                if (!silent) {
-                    self.__select(hash, silent);
-                }
-
-                 return self;
-            },
-
-            sync : function(hash) {
-                var self = this;
-
-                self.select(hash, true);
 
                 return self;
             },
 
-            __select : function(hash) {
+            update : function(target, hash) {
                 var self = this;
 
                 self.trigger(Trigger.EVENT_SELECT, hash);
                 self.trigger(View.EVENT_SYNC, hash);
+
+                return self;
             },
 
-            __onclick : function(event) {
+            _onselect : function(message, hash) {
+                var self = this;
+
+                self.update(message.source, hash);
+            }
+
+            _onclick : function(event) {
                 var self = this,
                      hash = event.currentTarget.href;
 
@@ -55,10 +54,10 @@ define([
                 }
                 hash = hash.split('#').pop();
 
-                self.select(hash, false);
+                self._onselect(false, hash);
             }
         }, {
-             EVENT_SELECT : 'select:trigger'
+             EVENT_SELECT : 'select'
         });
 
 
