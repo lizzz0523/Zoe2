@@ -323,9 +323,8 @@ define([
     }])
 
     .directive('zoeSlider', [
-        '$rootScope',
-        '$timeout',
-    function($rootScope, $timeout) {
+        // no-di
+    function() {
         return {
             restrict: 'AE',
             template: tmplSlider,
@@ -335,26 +334,19 @@ define([
             controller: 'zoeSliderCtrl',
             require: 'zoeSlider',
             scope: {
+                bind: '=?zoeBind'
             },
 
             link: function($scope, elem, attr, ctrl) {
                 ctrl.init(elem, attr);
 
-                $rootScope.$watch(attr.zoeBind, function(value) {
-                    $scope[attr.zoeBind] = value;
-                });
-
-                $scope.$watch(attr.zoeBind, function(value) {
-                    $rootScope[attr.zoeBind] = value;
-
+                $scope.$watch('bind', function(value) {
                     if (value !== void 0) {
                         ctrl.select(value);
                     }
                 });
 
-                $timeout(function() {
-                    $scope[attr.zoeBind] = ctrl.config.init || 0;
-                });
+                $scope.bind = ctrl.config.init || 0;
             }
         };
     }])
