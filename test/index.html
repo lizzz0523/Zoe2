@@ -7,7 +7,6 @@
 .zoe-slider {
     width: 100%;
     height: 100%;
-    font-size: 0;
 }
 
 .zoe-slider .zoe-slider_mask {
@@ -15,6 +14,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    font-size: 0;
 }
 
 .zoe-slider .zoe-slider_view {
@@ -63,70 +63,25 @@
 </style>
 </head>
 <body>
-<button ng-mouseenter="zoe.mySlider='hash1'; zoe.mySlider1='hash1'">hash11</button>
-<button ng-mouseenter="zoe.mySlider='hash1'; zoe.mySlider1='hash2'">hash12</button>
-<button ng-mouseenter="zoe.mySlider='hash1'; zoe.mySlider1='hash3'">hash13</button>
-<button ng-mouseenter="zoe.mySlider='hash1'; zoe.mySlider1='hash4'">hash14</button>
-<br />
-<button ng-mouseenter="zoe.mySlider='hash2'; zoe.mySlider2='hash1'">hash21</button>
-<button ng-mouseenter="zoe.mySlider='hash2'; zoe.mySlider2='hash2'">hash22</button>
-<button ng-mouseenter="zoe.mySlider='hash2'; zoe.mySlider2='hash3'">hash23</button>
-<button ng-mouseenter="zoe.mySlider='hash2'; zoe.mySlider2='hash4'">hash24</button>
-<br />
-<button ng-mouseenter="zoe.mySlider='hash3'; zoe.mySlider3='hash1'">hash31</button>
-<button ng-mouseenter="zoe.mySlider='hash3'; zoe.mySlider3='hash2'">hash32</button>
-<button ng-mouseenter="zoe.mySlider='hash3'; zoe.mySlider3='hash3'">hash33</button>
-<button ng-mouseenter="zoe.mySlider='hash3'; zoe.mySlider3='hash4'">hash34</button>
-<br />
-<button ng-mouseenter="zoe.mySlider='hash4'; zoe.mySlider4='hash1'">hash41</button>
-<button ng-mouseenter="zoe.mySlider='hash4'; zoe.mySlider4='hash2'">hash42</button>
-<button ng-mouseenter="zoe.mySlider='hash4'; zoe.mySlider4='hash3'">hash43</button>
-<button ng-mouseenter="zoe.mySlider='hash4'; zoe.mySlider4='hash4'">hash44</button>
+<p zoe-tabs zoe-bind="zoe.mySlider">
+    <a href="#slider1">hash1</a>
+    <a href="#slider2">hash2</a>
+    <a href="#slider3">hash3</a>
+    <a href="#slider4">hash4</a>
+</p>
 
-<div class="my-slider">
-    <div zoe-slider="[init=0, dir=vertical]" zoe-bind="zoe.mySlider">
-        <div zoe-id="hash1" zoe-slidee>
-            <div class="my-slider">
-                <div zoe-slider="[init=0]" zoe-bind="zoe.mySlider1">
-                    <div zoe-id="hash1" zoe-slidee><img src="images/slider/5.jpg" /></div>
-                    <div zoe-id="hash2" zoe-slidee><img src="images/slider/6.jpg" /></div>
-                    <div zoe-id="hash3" zoe-slidee><img src="images/slider/7.jpg" /></div>
-                    <div zoe-id="hash4" zoe-slidee><img src="images/slider/8.jpg" /></div>
-                </div>
-            </div>
-        </div>
-        <div zoe-id="hash2" zoe-slidee>
-            <div class="my-slider">
-                <div zoe-slider="[init=0]" zoe-bind="zoe.mySlider2">
-                    <div zoe-id="hash1" zoe-slidee><img src="images/slider/5.jpg" /></div>
-                    <div zoe-id="hash2" zoe-slidee><img src="images/slider/6.jpg" /></div>
-                    <div zoe-id="hash3" zoe-slidee><img src="images/slider/7.jpg" /></div>
-                    <div zoe-id="hash4" zoe-slidee><img src="images/slider/8.jpg" /></div>
-                </div>
-            </div>
-        </div>
-        <div zoe-id="hash3" zoe-slidee>
-            <div class="my-slider">
-                <div zoe-slider="[init=0]" zoe-bind="zoe.mySlider3">
-                    <div zoe-id="hash1" zoe-slidee><img src="images/slider/5.jpg" /></div>
-                    <div zoe-id="hash2" zoe-slidee><img src="images/slider/6.jpg" /></div>
-                    <div zoe-id="hash3" zoe-slidee><img src="images/slider/7.jpg" /></div>
-                    <div zoe-id="hash4" zoe-slidee><img src="images/slider/8.jpg" /></div>
-                </div>
-            </div>
-        </div>
-        <div zoe-id="hash4" zoe-slidee>
-            <div class="my-slider">
-                <div zoe-slider="[init=0]" zoe-bind="zoe.mySlider4">
-                    <div zoe-id="hash1" zoe-slidee><img src="images/slider/5.jpg" /></div>
-                    <div zoe-id="hash2" zoe-slidee><img src="images/slider/6.jpg" /></div>
-                    <div zoe-id="hash3" zoe-slidee><img src="images/slider/7.jpg" /></div>
-                    <div zoe-id="hash4" zoe-slidee><img src="images/slider/8.jpg" /></div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="my-slider" zoe-slider="[init=0]" zoe-bind="zoe.mySlider">
+    <div id="slider1" zoe-slidee><img src="images/slider/1.jpg" /></div>
+    <div id="slider2" zoe-slidee><img src="images/slider/2.jpg" /></div>
+    <div id="slider3" zoe-slidee><img src="images/slider/3.jpg" /></div>
+    <div id="slider4" zoe-slidee><img src="images/slider/4.jpg" /></div>
+    <div id="slider5" zoe-slidee><img src="images/slider/5.jpg" /></div>
+    <div id="slider6" zoe-slidee><img src="images/slider/6.jpg" /></div>
+    <div id="slider7" zoe-slidee><img src="images/slider/7.jpg" /></div>
+    <div id="slider8" zoe-slidee><img src="images/slider/8.jpg" /></div>
 </div>
+
+        
 <script type="text/javascript" data-main="../zoe/main" src="../zoe/vendor/require.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@ define([
     'angular',
 
     'directive/index',
-    'directive/panel',
+    'directive/tabs',
     'directive/slider',
 
     'service/index',

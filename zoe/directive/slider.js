@@ -26,12 +26,12 @@ define([
     ;module
 
     .constant('zoeSliderConfig', {
-        TYPE_PREV : 1,
-        TYPE_NEXT : 2,
+        TYPE_PREV: 1,
+        TYPE_NEXT: 2,
 
-        speed     : 500,
-        loop      : true,
-        dir       : 'horizontal'
+        speed: 500,
+        loop: true,
+        dir: 'horizontal'
     })
 
     .controller('zoeSliderCtrl', [
@@ -58,9 +58,9 @@ define([
         self.qname = 'zoe-slider';
                 
         self.slider = {
-            curIndex : -1,
-            minIndex : 0,
-            maxIndex : 0
+            curIndex: -1,
+            minIndex: 0,
+            maxIndex: 0
         };
 
         self.slidees = [];
@@ -82,10 +82,10 @@ define([
                 slidees = self.slidees;
 
             slidees.push({
-                $elem : $(elem).hide(),
+                $elem: $(elem).hide(),
 
-                hash  : attr.zoeId || '',
-                index : slidees.length
+                hash: attr.id || '',
+                index: slidees.length
             });
 
             slider.maxIndex = slidees.length - 1;
@@ -326,7 +326,7 @@ define([
         // no-di
     function() {
         return {
-            restrict: 'AE',
+            restrict: 'A',
             template: tmplSlider,
             replace: true,
             transclude: true,
@@ -355,7 +355,7 @@ define([
         // no-di
     function() {
         return {
-            restrict: 'AE',
+            restrict: 'A',
             template: tmplSlidee,
             replace: true,
             transclude: true,
@@ -367,7 +367,7 @@ define([
             link: function($scope, elem, attr, ctrl) {
                 ctrl.append(elem, attr);
             }
-        }
+        };
     }]);
 
 });
