@@ -6,23 +6,6 @@ define([
     'service/queue'
 ], function($, module) {
 
-    var tmplSlider = [
-            
-            '<div class="zoe-slider">',
-                '<div class="zoe-slider_mask">',
-                    '<div class="zoe-slider_view" ng-transclude></div>',
-                '</div>',
-            '</div>'
-
-        ].join(''),
-
-        tmplSlidee = [
-
-            '<div class="zoe-slidee" ng-transclude></div>'
-
-        ].join('');
-
-
     ;module
 
     .constant('zoeSliderConfig', {
@@ -41,11 +24,12 @@ define([
         'zoeQueue',
         'zoeSliderConfig',
     function($scope, utils, queue, sliderConfig) {
-        var _isFunction = utils.isFunction,
+        var _parser = utils.parseConfig,
+            _isFunction = utils.isFunction,
             _isBoolean = utils.isBoolean,
             _isString = utils.isString,
             _isFinite = utils.isFinite,
-            _parser = utils.parseConfig,
+            _uniqueId = utils.uniqueId,
             _defaults = utils.defaults,
             _defer = utils.defer,
             _delay = utils.delay,
@@ -84,11 +68,22 @@ define([
             slidees.push({
                 $elem: $(elem).hide(),
 
-                hash: attr.id || '',
-                index: slidees.length
+                hash: attr.id || attr.name || 'zoe-slidee-' + _uniqueId(),
+                index: slider.maxIndex
             });
 
-            slider.maxIndex = slidees.length - 1;
+            slider.maxIndex++;
+        };
+
+        self.remove = function(elem) {
+            var slidees = self.slidees,
+                slidee;
+
+            slidee = _find(slidees, function(slidee) {
+                return slidee.$elem.is(elem);
+            });
+
+            slidees.splice(slidee.index, 1);
         };
 
         self.select = function(hash) {
@@ -179,10 +174,14 @@ define([
                 });
 
                 queue.add(qname, function() {
+                    slider.isAnimated = true;
+
                     showSlidee(index);
-                    queue.next(qname);
 
                     slider.curIndex = index;
+                    slider.isAnimated = false;
+
+                    queue.next(qname);
                 });
             } else {
                 queue.add(qname, function(){
@@ -199,6 +198,8 @@ define([
 
                     slideTo(index, force, function() {
                         slider.isAnimated = false;
+                        // 这里是为了在动画结束后
+                        // 马上启动buffer的其他动画
                         queue.next(qname);
                     });
 
@@ -213,8 +214,8 @@ define([
 
         function slideTo(index, force, callback) {
             var config = self.config,
-                slideSpeed = config.speed,
                 isVertical = config.dir === 'vertical',
+                slideSpeed = config.speed,
 
                 slider = self.slider,
                 curIndex = slider.curIndex,
@@ -327,7 +328,7 @@ define([
     function() {
         return {
             restrict: 'A',
-            template: tmplSlider,
+            templateUrl: 'zoe/template/slider/slider.html',
             replace: true,
             transclude: true,
 
@@ -356,7 +357,7 @@ define([
     function() {
         return {
             restrict: 'A',
-            template: tmplSlidee,
+            templateUrl: 'zoe/template/slider/slidee.html',
             replace: true,
             transclude: true,
             
@@ -366,6 +367,10 @@ define([
 
             link: function($scope, elem, attr, ctrl) {
                 ctrl.append(elem, attr);
+
+                $scope.$on('$destroy', function() {
+                    ctrl.remove(elem);
+                });
             }
         };
     }]);

@@ -1,19 +1,23 @@
 {
-  "name": "Zoe2",
+  "name": "zeRo",
   "version": "1.0.0",
-  "description": "Next Generation Zoe Lib",
+  "description": "lizzz的个人主页",
   "author": {
     "name": "Liz Chow",
     "url": "http://lizzz0523.github.io/"
   },
+  "main": "boot.js",
   "devDependencies": {
     "grunt": "~0.4.2",
+    "grunt-contrib-concat": "~0.5.0",
     "grunt-contrib-copy": "~0.6.0",
     "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-nodeunit": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.4",
-    "grunt-contrib-sass": "~0.8.1",
     "grunt-contrib-uglify": "~0.6.0",
     "grunt-contrib-watch": "~0.6.1"
+  },
+  "dependencies": {
+    "express": "^4.10.7",
+    "underscore": "^1.7.0"
   }
 }

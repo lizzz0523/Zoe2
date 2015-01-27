@@ -3,6 +3,7 @@ define([
 
     'directive/index',
     'directive/tabs',
+    'directive/panel',
     'directive/slider',
 
     'service/index',

@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Test</title>
+<style>
+.zoe-slidee {
+    float: left;
+}
+
+.zoe-slider {
+    width: 100%;
+    height: 100%;
+}
+
+.zoe-slider .zoe-slider_mask {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.zoe-slider .zoe-slider_view {
+    position: absolute;
+}
+
+.zoe-slider .zoe-slider_view__v,
+.zoe-slider .zoe-slider_view__h, .zoe-slider_view__v {
+    width: 100%;
+    height: 200%;
+}
+
+.zoe-slider .zoe-slider_view__h,
+.zoe-slider .zoe-slider_view__v .zoe-slider_view__h {
+    width: 200%;
+    height: 100%;
+}
+
+.zoe-slider .zoe-slider_view__v .zoe-slidee,
+.zoe-slider .zoe-slider_view__h .zoe-slider_view__v .zoe-slidee {
+    width: 100%;
+    height: 50%;
+}
+
+.zoe-slider .zoe-slider_view__h .zoe-slidee,
+.zoe-slider .zoe-slider_view__v .zoe-slider_view__h .zoe-slidee {
+    width: 50%;
+    height: 100%;
+}
+
+.zoe-pane {
+    width: 100%;
+    height: 100%;
+}
+
+.zoe-panel {
+    width: 100%;
+    height: 100%;
+}
+
+.zoe-panel .zoe-panel_view {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.my-slider {
+    width: 206px;
+    height: 159px;
+    overflow: hidden;
+}
+
+.my-slider img {
+    display: block;
+}
+</style>
+</head>
+<body>
+<p zoe-tabs zoe-bind="zoe.mySlider">
+    <a href="#t1">image-1</a>
+    <a href="#t2">image-2</a>
+    <a href="#t3">image-3</a>
+    <a href="#t4">image-4</a>
+    <a href="#t5">image-5</a>
+    <a href="#t6">image-6</a>
+    <a href="#t7">image-7</a>
+    <a href="#t8">image-8</a>
+    <a href="#t9">image-9</a>
+</p>
+
+<div class="my-slider" zoe-slider="[init=0]" zoe-bind="zoe.mySlider">
+    <div name="t1" zoe-slidee><img src="test/images/slider/1.jpg" /></div>
+    <div name="t2" zoe-slidee><img src="test/images/slider/2.jpg" /></div>
+    <div name="t3" zoe-slidee><img src="test/images/slider/3.jpg" /></div>
+    <div name="t4" zoe-slidee><img src="test/images/slider/4.jpg" /></div>
+    <div name="t5" zoe-slidee><img src="test/images/slider/5.jpg" /></div>
+    <div name="t6" zoe-slidee><img src="test/images/slider/6.jpg" /></div>
+    <div name="t7" zoe-slidee><img src="test/images/slider/7.jpg" /></div>
+    <div name="t8" zoe-slidee><img src="test/images/slider/8.jpg" /></div>
+    <div name="t9" zoe-slidee><span>abc</span></div>
+</div>
+
+<div class="my-slider" zoe-panel="[init=0]" zoe-bind="zoe.mySlider">
+    <div name="t1" zoe-pane><img src="test/images/slider/1.jpg" /></div>
+    <div name="t2" zoe-pane><img src="test/images/slider/2.jpg" /></div>
+    <div name="t3" zoe-pane><img src="test/images/slider/3.jpg" /></div>
+    <div name="t4" zoe-pane><img src="test/images/slider/4.jpg" /></div>
+    <div name="t5" zoe-pane><img src="test/images/slider/5.jpg" /></div>
+    <div name="t6" zoe-pane><img src="test/images/slider/6.jpg" /></div>
+    <div name="t7" zoe-pane><img src="test/images/slider/7.jpg" /></div>
+    <div name="t8" zoe-pane><img src="test/images/slider/8.jpg" /></div>
+    <div name="t9" zoe-pane><span>abc</span></div>
+</div>
+
+        
+<script type="text/javascript" data-main="zoe/main" src="zoe/vendor/require.js"></script>
+</body>
+</html>
