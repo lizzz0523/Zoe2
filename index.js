@@ -4,5 +4,5 @@ var express = require('express'),
 app.use('/', express.static('./'));
 
 app.listen(8081, function() {
-    console.log('budget started...');
+    console.log('server started...');
 });

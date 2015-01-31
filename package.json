@@ -1,12 +1,12 @@
 {
-  "name": "zeRo",
-  "version": "1.0.0",
-  "description": "lizzz的个人主页",
+  "name": "Zoe",
+  "version": "2.0.0",
+  "description": "The next generation of Zoe",
   "author": {
     "name": "Liz Chow",
     "url": "http://lizzz0523.github.io/"
   },
-  "main": "boot.js",
+  "main": "index.js",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-concat": "~0.5.0",

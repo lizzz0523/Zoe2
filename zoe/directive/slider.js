@@ -12,6 +12,7 @@ define([
         TYPE_PREV: 1,
         TYPE_NEXT: 2,
 
+        init: 0,
         speed: 500,
         loop: true,
         dir: 'horizontal'
@@ -44,7 +45,7 @@ define([
         self.slider = {
             curIndex: -1,
             minIndex: 0,
-            maxIndex: 0
+            maxIndex: -1
         };
 
         self.slidees = [];
@@ -59,6 +60,8 @@ define([
             slider.$view = slider.$mask.find('>.zoe-slider_view');
 
             slider.$view.addClass(self.config.dir === 'vertical' ? 'zoe-slider_view__v' : 'zoe-slider_view__h');
+            
+            return self;
         };
 
         self.append = function(elem, attr) {
@@ -68,15 +71,21 @@ define([
             slidees.push({
                 $elem: $(elem).hide(),
 
-                hash: attr.id || attr.name || 'zoe-slidee-' + _uniqueId(),
-                index: slider.maxIndex
+                attr: attr,
+                hash: attr.name || attr.id || 'zoe-slidee-' + _uniqueId(),
+                
+                index: slidees.length
             });
 
             slider.maxIndex++;
+
+            return self;
         };
 
         self.remove = function(elem) {
-            var slidees = self.slidees,
+            var slider = self.slider,
+
+                slidees = self.slidees,
                 slidee;
 
             slidee = _find(slidees, function(slidee) {
@@ -84,28 +93,29 @@ define([
             });
 
             slidees.splice(slidee.index, 1);
+
+            slider.maxIndex--;
+
+            return self;
         };
 
-        self.select = function(hash) {
+        self.select = function(hash, force) {
             var slider = self.slider,
                 curIndex = slider.curIndex,
 
-                force = hash === 'prev' ? true : hash === 'next' ? false : void 0,
                 index = validIndex(hash);
 
             if (index !== curIndex) {
                 slideBuffer(index, force);
             }
+
+            return self;
         };
 
-        self.prev = function() {
-            self.select('prev');
+        self.navigate = function(hash) {
+            return validIndex(hash);
         };
 
-        self.next = function() {
-            self.select('next');
-        };
-                
         function validIndex(index) {
             var config = self.config,
                 isLoop = config.loop,
@@ -151,7 +161,7 @@ define([
             }
 
             return index;
-        }
+        };
 
         function slideBuffer(index, force) {
             var slider = self.slider,
@@ -338,16 +348,30 @@ define([
                 bind: '=?zoeBind'
             },
 
-            link: function($scope, elem, attr, ctrl) {
-                ctrl.init(elem, attr);
+            link: function($scope, elem, attr, ctrl) {               
+                $scope.prev = function() {
+                    $scope.force = false;
+                    $scope.bind = ctrl.navigate('prev');
+                };
+
+                $scope.next = function() {
+                    $scope.force = true;
+                    $scope.bind = ctrl.navigate('next');
+                }
 
                 $scope.$watch('bind', function(value) {
+                    var force = $scope.force;
+
                     if (value !== void 0) {
-                        ctrl.select(value);
+                        ctrl.select(value, force);
+                    } else {
+                        ctrl.select(ctrl.config.init, force);
                     }
+
+                    delete $scope.force;
                 });
 
-                $scope.bind = ctrl.config.init || 0;
+                ctrl.init(elem, attr);
             }
         };
     }])
@@ -366,11 +390,11 @@ define([
             },
 
             link: function($scope, elem, attr, ctrl) {
-                ctrl.append(elem, attr);
-
                 $scope.$on('$destroy', function() {
                     ctrl.remove(elem);
                 });
+
+                ctrl.append(elem, attr);
             }
         };
     }]);

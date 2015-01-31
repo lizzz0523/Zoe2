@@ -8,6 +8,7 @@ define([
     ;module
 
     .constant('zoePanelConfig', {
+        init: 0,
         speed: 500
     })
 
@@ -28,7 +29,7 @@ define([
         self.panel = {
             curIndex: -1,
             minIndex: 0,
-            maxIndex: 0
+            maxIndex: -1
         };
 
         self.panes = [];
@@ -39,6 +40,8 @@ define([
             self.config = _defaults(_parser(attr.zoePanel), panelConfig);
             
             panel.$elem = $(elem);
+
+            return self;
         };
 
         self.append = function(elem, attr) {
@@ -48,15 +51,21 @@ define([
             panes.push({
                 $elem: $(elem).hide(),
 
+                attr: attr,
                 hash: attr.id || attr.name || 'zoe-pane-' + _uniqueId(),
-                index: panel.maxIndex
+                
+                index: panes.length
             });
 
             panel.maxIndex++;
+
+            return self;
         };
 
         self.remove = function(elem) {
             var panel = self.panel,
+
+                panes = self.panes,
                 pane;
 
             pane = _find(panes, function(pane) {
@@ -64,6 +73,10 @@ define([
             });
 
             panes.splice(pane.index, 1);
+
+            panel.maxIndex--;
+
+            return self;
         };
 
         self.select = function(hash) {
@@ -83,6 +96,8 @@ define([
 
                 panel.curIndex = index;
             }
+
+            return self;
         };
 
         function validIndex(index) {
@@ -175,15 +190,15 @@ define([
             },
 
             link: function($scope, elem, attr, ctrl) {
-                ctrl.init(elem, attr);
-
                 $scope.$watch('bind', function(value) {
                     if (value !== void 0) {
                         ctrl.select(value);
+                    } else {
+                        ctrl.select(ctrl.config.init);
                     }
                 });
 
-                $scope.bind = ctrl.config.init || 0;
+                ctrl.init(elem, attr);
             }
         };
     }])
@@ -202,11 +217,11 @@ define([
             },
 
             link: function($scope, elem, attr, ctrl) {
-                ctrl.append(elem, attr);
-
                 $scope.$on('$destroy', function() {
                     ctrl.remove(elem);
                 });
+                
+                ctrl.append(elem, attr);
             }
         };
     }]);
