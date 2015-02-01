@@ -25,6 +25,7 @@ define([
         'zoeQueue',
         'zoeSliderConfig',
     function($scope, utils, queue, sliderConfig) {
+
         var _parser = utils.parseConfig,
             _isFunction = utils.isFunction,
             _isBoolean = utils.isBoolean,
@@ -51,15 +52,16 @@ define([
         self.slidees = [];
 
         self.init = function(elem, attr) {
-            var slider = self.slider;
+            var slider = self.slider,
+
+                $elem = $(elem);
+                $mask = $elem.find('>.zoe-slider_mask');
+                $view = $mask.find('>.zoe-slider_view');
 
             self.config = _defaults(_parser(attr.zoeSlider), sliderConfig);
-            
-            slider.$elem = $(elem);
-            slider.$mask = slider.$elem.find('>.zoe-slider_mask');
-            slider.$view = slider.$mask.find('>.zoe-slider_view');
 
-            slider.$view.addClass(self.config.dir === 'vertical' ? 'zoe-slider_view__v' : 'zoe-slider_view__h');
+            slider.$elem = $elem;
+            slider.$view = $view.addClass(self.config.dir === 'vertical' ? 'zoe-slider_view__v' : 'zoe-slider_view__h');
             
             return self;
         };
@@ -331,11 +333,13 @@ define([
 
             slidee.$elem.hide();
         }
+
     }])
 
     .directive('zoeSlider', [
         // no-di
     function() {
+
         return {
             restrict: 'A',
             templateUrl: 'zoe/template/slider/slider.html',
@@ -345,21 +349,21 @@ define([
             controller: 'zoeSliderCtrl',
             require: 'zoeSlider',
             scope: {
-                bind: '=?zoeBind'
+                selected: '=?zoeBind'
             },
 
             link: function($scope, elem, attr, ctrl) {               
                 $scope.prev = function() {
                     $scope.force = false;
-                    $scope.bind = ctrl.navigate('prev');
+                    $scope.selected = ctrl.navigate('prev');
                 };
 
                 $scope.next = function() {
                     $scope.force = true;
-                    $scope.bind = ctrl.navigate('next');
+                    $scope.selected = ctrl.navigate('next');
                 }
 
-                $scope.$watch('bind', function(value) {
+                $scope.$watch('selected', function(value) {
                     var force = $scope.force;
 
                     if (value !== void 0) {
@@ -374,11 +378,13 @@ define([
                 ctrl.init(elem, attr);
             }
         };
+
     }])
 
     .directive('zoeSlidee', [
         // no-di
     function() {
+
         return {
             restrict: 'A',
             templateUrl: 'zoe/template/slider/slidee.html',
@@ -397,6 +403,7 @@ define([
                 ctrl.append(elem, attr);
             }
         };
+        
     }]);
 
 });

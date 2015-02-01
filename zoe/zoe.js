@@ -2,14 +2,16 @@ define([
     'angular',
 
     'directive/index',
-    'directive/tabs',
-    'directive/panel',
     'directive/slider',
+    'directive/panel',
+    'directive/tabs',
+    'directive/map',
 
     'service/index',
     'service/utils',
     'service/cache',
-    'service/queue'
+    'service/queue',
+    'service/bmap'
 ], function(angular) {
 
     return angular.module('zoe', [

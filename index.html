@@ -64,6 +64,17 @@
     height: 100%;
 }
 
+.zoe-map {
+    width: 100%;
+    height: 100%;
+}
+
+.zoe-map .zoe-map_view {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .my-slider {
     width: 206px;
     height: 159px;
@@ -73,10 +84,26 @@
 .my-slider img {
     display: block;
 }
+
+.my-panel {
+    width: 206px;
+    height: 159px;
+    overflow: hidden;
+}
+
+.my-panel img {
+    display: block;
+}
+
+.my-map {
+    width: 506px;
+    height: 359px;
+    overflow: hidden;
+}
 </style>
 </head>
 <body>
-<p zoe-tabs zoe-bind="zoe.mySlider">
+<p zoe-tabs zoe-bind="zoe.myPicList">
     <a href="#t1">image-1</a>
     <a href="#t2">image-2</a>
     <a href="#t3">image-3</a>
@@ -88,7 +115,7 @@
     <a href="#t9">image-9</a>
 </p>
 
-<div class="my-slider" zoe-slider="[init=0]" zoe-bind="zoe.mySlider">
+<div class="my-slider" zoe-slider="[init=0]" zoe-bind="zoe.myPicList">
     <div name="t1" zoe-slidee><img src="test/images/slider/1.jpg" /></div>
     <div name="t2" zoe-slidee><img src="test/images/slider/2.jpg" /></div>
     <div name="t3" zoe-slidee><img src="test/images/slider/3.jpg" /></div>
@@ -100,7 +127,7 @@
     <div name="t9" zoe-slidee><span>abc</span></div>
 </div>
 
-<div class="my-slider" zoe-panel="[init=0]" zoe-bind="zoe.mySlider">
+<div class="my-panel" zoe-panel="[init=0]" zoe-bind="zoe.myPicList">
     <div name="t1" zoe-pane><img src="test/images/slider/1.jpg" /></div>
     <div name="t2" zoe-pane><img src="test/images/slider/2.jpg" /></div>
     <div name="t3" zoe-pane><img src="test/images/slider/3.jpg" /></div>
@@ -110,6 +137,16 @@
     <div name="t7" zoe-pane><img src="test/images/slider/7.jpg" /></div>
     <div name="t8" zoe-pane><img src="test/images/slider/8.jpg" /></div>
     <div name="t9" zoe-pane><span>abc</span></div>
+</div>
+
+<p zoe-tabs zoe-bind="zoe.myMap">
+    <a href="#t1">site-1</a>
+    <a href="#t2">site-2</a>
+</p>
+
+<div class="my-map" zoe-map="[init=0, overview]" zoe-bind="zoe.myMap">
+    <p name="t1" zoe-site zoe-lng="113.26842946866" zoe-lat="23.109992557766"></p>
+    <p name="t2" zoe-site zoe-lng="113.26929507231" zoe-lat="23.203684955051"></p>
 </div>
 
         

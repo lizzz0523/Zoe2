@@ -65,15 +65,15 @@ define([
 
         
         return {
-            get : function(context, key) {
+            get: function(context, key) {
                 return cacheData.call(context, key);
             },
 
-            set : function(context, key, value) {
+            set: function(context, key, value) {
                 return cacheData.call(context, key, value);
             },
 
-            remove : function(context, key) {
+            remove: function(context, key) {
                 removeData.call(context, key);
             }
         };

@@ -18,9 +18,11 @@ define([
         'zoeUtils',
         'zoePanelConfig',
     function($scope, utils, panelConfig) {
+
         var _parser = utils.parseConfig,
             _isString = utils.isString,
             _isFinite = utils.isFinite,
+            _uniqueId = utils.uniqueId,
             _defaults = utils.defaults,
             _find = utils.find,
 
@@ -35,11 +37,15 @@ define([
         self.panes = [];
 
         self.init = function(elem, attr) {
-            var panel = self.panel;
+            var panel = self.panel,
+
+                $elem = $(elem),
+                $view = $elem.find('>.zoe-panel_view');
 
             self.config = _defaults(_parser(attr.zoePanel), panelConfig);
             
-            panel.$elem = $(elem);
+            panel.$elem = $elem;
+            panel.$view = $view;
 
             return self;
         };
@@ -172,11 +178,13 @@ define([
                 hidePane(i, fade);
             }
         }
+
     }])
 
     .directive('zoePanel', [
         // no-di
     function() {
+
         return {
             restrict: 'A',
             templateUrl: 'zoe/template/panel/panel.html',
@@ -186,11 +194,11 @@ define([
             controller: 'zoePanelCtrl',
             require: 'zoePanel',
             scope: {
-                bind: '=?zoeBind'
+                selected: '=?zoeBind'
             },
 
             link: function($scope, elem, attr, ctrl) {
-                $scope.$watch('bind', function(value) {
+                $scope.$watch('selected', function(value) {
                     if (value !== void 0) {
                         ctrl.select(value);
                     } else {
@@ -201,11 +209,13 @@ define([
                 ctrl.init(elem, attr);
             }
         };
+
     }])
 
     .directive('zoePane', [
         // no-di
     function() {
+
         return {
             restrict: 'A',
             templateUrl: 'zoe/template/panel/pane.html',
@@ -224,6 +234,7 @@ define([
                 ctrl.append(elem, attr);
             }
         };
+        
     }]);
 
 });

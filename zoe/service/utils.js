@@ -3,30 +3,30 @@ define([
     'service/index'    
 ], function(_, module) {
 
-    function slice(arr, start, end) {
-        return end != void 0
-        ? [].slice.call(arr, start, end)
-        : [].slice.call(arr, start);
-    }
+    module.factory('zoeUtils', [function() {
 
-    function push(obj, key, value) {
-        // 如果push到某一key值的value不至一个
-        // 那么我们应该把他push到一个数组当中
-        
-        if (key in obj) {
-            obj[key].length == +obj[key].length || (obj[key] = [obj[key]]);
-            obj[key].push(value);
-        } else {
-            obj[key] = value;
+        function slice(arr, start, end) {
+            return end != void 0
+            ? [].slice.call(arr, start, end)
+            : [].slice.call(arr, start);
         }
 
-        return obj;
-    }
+        function push(obj, key, value) {
+            // 如果push到某一key值的value不至一个
+            // 那么我们应该把他push到一个数组当中
+            
+            if (key in obj) {
+                obj[key].length == +obj[key].length || (obj[key] = [obj[key]]);
+                obj[key].push(value);
+            } else {
+                obj[key] = value;
+            }
 
-    module.factory('zoeUtils', [function() {
+            return obj;
+        }
         
         var utils = {
-                guid : function() {
+                guid: function() {
                     var d = new Date().getTime(), r;
 
                     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -73,13 +73,13 @@ define([
             };
 
         _.extend(utils, {
-            trim : function(str) {
+            trim: function(str) {
                 if(str == null) return '';
 
                 return String(str).replace(rtrim, '');
             },
 
-            encode : function(str) {
+            encode: function(str) {
                 if(str == null) return '';
 
                 return String(str).replace(rencode, function(match) {
@@ -87,7 +87,7 @@ define([
                 });
             },
 
-            decode : function(str) {
+            decode: function(str) {
                 if (str == null) return '';
 
                 return String(str).replace(rdecode, function(match) {
@@ -95,7 +95,7 @@ define([
                 });
             },
 
-            escape : function(str) {
+            escape: function(str) {
                 if (str == null) return '';
 
                 return String(str).replace(rescape, function(match) {
@@ -103,7 +103,7 @@ define([
                 });
             },
 
-            camelCase : function(str) {
+            camelCase: function(str) {
                 if (str == null) return '';
 
                 return String(str).replace(rcamelCase, function(all, first) {
@@ -111,7 +111,7 @@ define([
                 });
             },
 
-            dashCase : function(str) {
+            dashCase: function(str) {
                 if (str == null) return '';
 
                 return String(str).replace(rdashCase, function(all, first) {
@@ -140,7 +140,7 @@ define([
             aurl = 'all protocol host pathname query hash'.split(' ');
 
         _.extend(utils, {
-            parseJSON : (function() {
+            parseJSON: (function() {
                 // 参考: http://json.org/json2.js
 
                 function walk(key, list, reviver){
@@ -193,7 +193,7 @@ define([
 
             })(),
 
-            parseURL : function(url) {
+            parseURL: function(url) {
                 var location = window.location,
                     match = null,
                     index = 1,
@@ -256,7 +256,7 @@ define([
                 return res;
             },
 
-            parseQuery : function(str, separator) {
+            parseQuery: function(str, separator) {
                 var query = String(str).match(rquery),
                     key,
                     value;
@@ -285,7 +285,7 @@ define([
                 }, {});
             },
 
-            parseConfig : function(str) {
+            parseConfig: function(str) {
                 var key = '',
                     hash = {},
 

@@ -11,7 +11,7 @@ define([
             _each = utils.each;
 
         var settings = {
-                CACHE : 'queues'
+                CACHE: 'queues'
             };
 
         function Queue(context) {
@@ -20,7 +20,7 @@ define([
         }
 
         Queue.prototype = {
-            add : function(name, callback) {
+            add: function(name, callback) {
                 var queues = cache.get(this, settings.CACHE),
                     players = queues[name] || (queues[name] = []);
 
@@ -28,13 +28,13 @@ define([
                     queues[name] = _clone(callback);
                 } else {
                     players.push({
-                        context : this.context,
-                        callback : callback
+                        context: this.context,
+                        callback: callback
                     });
                 }
             },
 
-            next : function(name) {
+            next: function(name) {
                 var queues = cache.get(this, settings.CACHE),
                     players = queues[name],
                     player;
@@ -51,14 +51,14 @@ define([
                 }
             },
 
-            clear : function(name) {
+            clear: function(name) {
                 var queues = cache.get(this, settings.CACHE),
                     players = queues[name];
 
                 players && (delete queues[name]);
             },
 
-            size : function(name) {
+            size: function(name) {
                 var queues = cache.get(this, settings.CACHE),
                     players = queues[name];
 

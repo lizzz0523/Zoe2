@@ -10,6 +10,7 @@ define([
     .directive('zoeTabs', [
         // no-di
     function() {
+
         return {
             restrict: 'A',
             scope: {
@@ -33,7 +34,8 @@ define([
                     });
                 });
             }
-        }
+        };
+        
     }])
 
 });
